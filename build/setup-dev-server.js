@@ -11,10 +11,16 @@ const readFile = (fs, file) => {
     return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8');
   } catch (e) {}
 };
-
+/**
+ *
+ * @param {*} app Express Instance
+ * @param {*} templatePath
+ * @param {*} cb
+ */
 module.exports = function setupDevServer(app, templatePath, cb) {
   let bundle;
   let template;
+  let clientManifest;
 
   let ready;
 
@@ -22,10 +28,11 @@ module.exports = function setupDevServer(app, templatePath, cb) {
     ready = r;
   });
   const update = () => {
-    if (bundle) {
+    if (bundle && clientManifest) {
       ready();
       cb(bundle, {
-        template
+        template,
+        clientManifest
       });
     }
   };
@@ -60,6 +67,10 @@ module.exports = function setupDevServer(app, templatePath, cb) {
     stats.errors.forEach(err => console.error(err));
     stats.warnings.forEach(err => console.warn(err));
     if (stats.errors.length) return;
+
+    clientManifest = JSON.parse(
+      readFile(devMiddleware.fileSystem, 'vue-ssr-client-manifest.json')
+    );
 
     update();
   });

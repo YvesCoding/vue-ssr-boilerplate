@@ -1,7 +1,7 @@
 export default {
-  asyncInc({ commit }) {
+  asyncInc({ commit }, payload) {
     setTimeout(() => {
-      commit('inc', 1);
-    }, 100);
+      commit('inc', payload);
+    }, 1100);
   }
 };
