@@ -1,7 +1,16 @@
+import { resolve } from 'path';
+
 export default {
   asyncInc({ commit }, payload) {
-    setTimeout(() => {
-      commit('inc', payload);
-    }, 1100);
+    return new Promise((resolve, reject) => {
+      console.log('Fetching data...');
+
+      setTimeout(() => {
+        console.log('Fetched...');
+
+        commit('inc', payload);
+        resolve();
+      }, Math.random() * 1000);
+    });
   }
 };

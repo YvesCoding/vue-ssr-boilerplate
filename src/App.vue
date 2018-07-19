@@ -7,6 +7,7 @@
             </router-view>
         </div>
         {{count}}
+        <p v-for="i in count" :key="i">{{i}}</p>
     </div>
 </template>
 

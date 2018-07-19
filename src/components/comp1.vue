@@ -10,6 +10,7 @@
 export default {
   asyncData({ store, route }) {
     // After dispatching action,will return Promise
+    console.log('async data called');
     return store.dispatch('asyncInc', 1);
   },
   data() {
